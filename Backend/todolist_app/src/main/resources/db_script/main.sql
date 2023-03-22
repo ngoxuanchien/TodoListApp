@@ -1,5 +1,7 @@
 CREATE DATABASE to_do_list_app;
 
+DROP DATABASE to_do_list_app;
+
 USE to_do_list_app;
 
 CREATE TABLE users(
