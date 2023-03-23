@@ -1,5 +1,6 @@
 package com.todolist_app.todolistapp.rest_controllers;
 
+import com.todolist_app.todolistapp.Enum.Status;
 import com.todolist_app.todolistapp.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,7 +30,7 @@ public class RegisterApiController {
         // Encrypt / Hash Password:
         String hashed_password = BCrypt.hashpw(password, BCrypt.gensalt());
 
-        int result = 0;
+        Status result = Status.REGISTER_FAILED;
         try {
             // Register New User:
             result = userService.registerNewUserServiceMethod(first_name, last_name, email, hashed_password);
@@ -37,11 +38,20 @@ public class RegisterApiController {
             e.printStackTrace();
 //            System.out.println(e.getMessage());
         } finally {
-            if (result != 1) {
-                return new ResponseEntity<>("Register failed", HttpStatus.BAD_REQUEST);
+            switch (result) {
+                case EMAIL_EXISTS -> {
+                    return new ResponseEntity<>("Email already exists", HttpStatus.BAD_REQUEST);
+                }
+                case REGISTER_FAILED -> {
+                    return new ResponseEntity<>("Register failed", HttpStatus.BAD_REQUEST);
+                }
+                case REGISTER_SUCCESS -> {
+                    return new ResponseEntity<>("Register success", HttpStatus.OK);
+                }
+                default -> {
+                    return new ResponseEntity<>("Error", HttpStatus.BAD_REQUEST);
+                }
             }
         }
-
-        return new ResponseEntity<>("Register successed", HttpStatus.OK);
     }
 }

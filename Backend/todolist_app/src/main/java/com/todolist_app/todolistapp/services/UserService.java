@@ -1,5 +1,6 @@
 package com.todolist_app.todolistapp.services;
 
+import com.todolist_app.todolistapp.Enum.Status;
 import com.todolist_app.todolistapp.models.User;
 import com.todolist_app.todolistapp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,22 +17,22 @@ public class UserService {
 //        return userRepository.registerNewUser(first_name, last_name, email, password);
 //    }
 
-    public int registerNewUserServiceMethod(String first_name, String last_name, String email, String password) {
-        int result = 0;
+    public Status registerNewUserServiceMethod(String first_name, String last_name, String email, String password) {
+        Status result;
         User user;
 
         try {
             user = new User(first_name, last_name, email, password);
             userRepository.save(user);
-            result = 1;
+            result = Status.REGISTER_SUCCESS;
         } catch (DataIntegrityViolationException e) {
 //            e.printStackTrace();
             System.out.println(e.getMessage());
-            result = 0;
+            result = Status.EMAIL_EXISTS;
         } catch (Exception e) {
             e.printStackTrace();
 //            System.out.println(e.getMessage());
-            result = 0;
+            result = Status.REGISTER_FAILED;
         }
 
         return result;
