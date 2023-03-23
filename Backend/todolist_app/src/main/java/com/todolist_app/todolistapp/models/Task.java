@@ -16,8 +16,8 @@ public class Task {
     @Column(nullable = false)
     private String task;
 
-    @ManyToOne()
-    @JoinColumn(name = "user.id")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user.id", nullable = false)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private User user;
