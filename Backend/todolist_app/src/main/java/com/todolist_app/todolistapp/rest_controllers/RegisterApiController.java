@@ -22,26 +22,26 @@ public class RegisterApiController {
                                           @RequestParam("last_name") String last_name,
                                           @RequestParam("email") String email,
                                           @RequestParam("password") String password) {
-//        if (first_name.isEmpty() || last_name.isEmpty() || email.isEmpty() || password.isEmpty()) {
-//            return new ResponseEntity<>("Please complete all Fields", HttpStatus.BAD_REQUEST);
-//        }
-//
-//        // Encrypt / Hash Password:
-//        String hashed_password = BCrypt.hashpw(password, BCrypt.gensalt());
-//
-//        int result = 0;
-//        try {
-//            // Register New User:
-//            result = userService.registerNewUserServiceMethod(first_name, last_name, email, password);
-//        } catch (Exception e) {
-//            e.printStackTrace();
+        if (first_name.isEmpty() || last_name.isEmpty() || email.isEmpty() || password.isEmpty()) {
+            return new ResponseEntity<>("Please complete all Fields", HttpStatus.BAD_REQUEST);
+        }
+
+        // Encrypt / Hash Password:
+        String hashed_password = BCrypt.hashpw(password, BCrypt.gensalt());
+
+        int result = 0;
+        try {
+            // Register New User:
+            result = userService.registerNewUserServiceMethod(first_name, last_name, email, hashed_password);
+        } catch (Exception e) {
+            e.printStackTrace();
 //            System.out.println(e.getMessage());
-//        } finally {
-//            if (result != 1) {
-//                return new ResponseEntity<>("Register failed", HttpStatus.BAD_REQUEST);
-//            }
-//        }
-//
-//        return new ResponseEntity<>("Register successed", HttpStatus.OK);
+        } finally {
+            if (result != 1) {
+                return new ResponseEntity<>("Register failed", HttpStatus.BAD_REQUEST);
+            }
+        }
+
+        return new ResponseEntity<>("Register successed", HttpStatus.OK);
     }
 }

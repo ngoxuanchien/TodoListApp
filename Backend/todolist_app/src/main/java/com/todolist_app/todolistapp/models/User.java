@@ -35,6 +35,16 @@ public class User {
     @ToString.Exclude
     private Collection<Task> tasks;
 
+    public User() {
+
+    }
+    public User(String first_name, String last_name, String email, String password) {
+        setFirst_name(first_name);
+        setLast_name(last_name);
+        setEmail(email);
+        setPassword(password);
+    }
+
     public Integer getId() {
         return id;
     }
