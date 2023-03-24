@@ -1,7 +1,7 @@
 package com.todolist_app.todolistapp;
 
-import com.todolist_app.todolistapp.models.Task;
-import com.todolist_app.todolistapp.models.User;
+import com.todolist_app.todolistapp.model.Task;
+import com.todolist_app.todolistapp.model.User;
 import com.todolist_app.todolistapp.repository.TaskRepository;
 import com.todolist_app.todolistapp.repository.UserRepository;
 import org.assertj.core.api.Assertions;
@@ -11,6 +11,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.annotation.Rollback;
 
+import java.util.List;
 import java.util.Optional;
 
 @DataJpaTest
@@ -23,7 +24,7 @@ public class TaskRepositoryTests {
 
     @Test
     public void testAddNew() {
-        Integer userId = 2;
+        Integer userId = 1;
         Optional<User> optionalUser = userRepository.findById(userId);
         User user = optionalUser.get();
 
@@ -35,5 +36,15 @@ public class TaskRepositoryTests {
 
         Assertions.assertThat(taskSave).isNotNull();
         Assertions.assertThat(taskSave.getId()).isGreaterThan(0);
+    }
+
+    @Test
+    public  void testFindAllByEmail() {
+        String email = "1234@gmail.com";
+        List<Task> taskList = taskRepository.findAllByEmail(email);
+
+        for (Task task : taskList) {
+            System.out.println(task.getTask());
+        }
     }
 }

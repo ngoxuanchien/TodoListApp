@@ -1,7 +1,8 @@
-package com.todolist_app.todolistapp.services;
+package com.todolist_app.todolistapp.service;
 
-import com.todolist_app.todolistapp.Enum.Status;
-import com.todolist_app.todolistapp.models.User;
+import com.todolist_app.todolistapp.model.Enum.LoginStatus;
+import com.todolist_app.todolistapp.model.Enum.RegisterStatus;
+import com.todolist_app.todolistapp.model.User;
 import com.todolist_app.todolistapp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -13,28 +14,29 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-//    public int registerNewUserServiceMethod(String first_name, String last_name, String email, String password) {
-//        return userRepository.registerNewUser(first_name, last_name, email, password);
-//    }
-
-    public Status registerNewUserServiceMethod(String first_name, String last_name, String email, String password) {
-        Status result;
+    public RegisterStatus registerNewUserServiceMethod(String first_name, String last_name, String email, String password) {
+        RegisterStatus result;
         User user;
 
         try {
             user = new User(first_name, last_name, email, password);
             userRepository.save(user);
-            result = Status.REGISTER_SUCCESS;
+            result = RegisterStatus.REGISTER_SUCCESS;
         } catch (DataIntegrityViolationException e) {
 //            e.printStackTrace();
             System.out.println(e.getMessage());
-            result = Status.EMAIL_EXISTS;
+            result = RegisterStatus.EMAIL_EXISTS;
         } catch (Exception e) {
             e.printStackTrace();
 //            System.out.println(e.getMessage());
-            result = Status.REGISTER_FAILED;
+            result = RegisterStatus.REGISTER_FAILED;
         }
 
         return result;
+    }
+
+    public LoginStatus loginUserServiceMethod(String email, String password) {
+        User user = userRepository.findByEmail(email);
+        return null;
     }
 }

@@ -1,19 +1,18 @@
 package com.todolist_app.todolistapp.repository;
 
-import com.todolist_app.todolistapp.models.User;
-import jakarta.transaction.Transactional;
-import org.springframework.data.jpa.repository.Modifying;
+import com.todolist_app.todolistapp.model.Task;
+import com.todolist_app.todolistapp.model.User;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.query.Param;
 
-public interface UserRepository extends CrudRepository<User, Integer> {
+import java.util.Collection;
 
-//    @Transactional
-//    @Modifying
-//    @Query(value = "INSERT INTO USERS(first name, last name, email, password) VALUES(:first_name, :last_name, :email, :password)", nativeQuery = true)
-//    int registerNewUser(@Param("first_name") String first_name,
-//                        @Param("last_name") String last_name,
-//                        @Param("email") String email,
-//                        @Param("password") String password);
+public interface UserRepository extends JpaRepository<User, Integer> {
+
+    User findByEmail(String email);
+
+    @Query (value = "SELECT t.id, t.task, t.user_id FROM tasks t " +
+            "JOIN users u on t.user_id = u.id " +
+            "WHERE u.email = :email", nativeQuery = true)
+    Collection<Task> findAllTaskByEmail(String email);
 }

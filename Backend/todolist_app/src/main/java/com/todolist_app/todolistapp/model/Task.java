@@ -1,4 +1,4 @@
-package com.todolist_app.todolistapp.models;
+package com.todolist_app.todolistapp.model;
 
 import jakarta.persistence.*;
 import lombok.Data;

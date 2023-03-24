@@ -1,14 +1,11 @@
-package com.todolist_app.todolistapp.models;
+package com.todolist_app.todolistapp.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
 
 @Entity
 @Data

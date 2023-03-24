@@ -1,6 +1,7 @@
 package com.todolist_app.todolistapp;
 
-import com.todolist_app.todolistapp.models.User;
+import com.todolist_app.todolistapp.model.Task;
+import com.todolist_app.todolistapp.model.User;
 import com.todolist_app.todolistapp.repository.UserRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -9,6 +10,9 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.annotation.Rollback;
 
+import java.awt.*;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Optional;
 
 @DataJpaTest
@@ -70,6 +74,26 @@ public class UserRepositoryTests {
 
         Optional<User> optionalUser = repo.findById(userId);
         Assertions.assertThat(optionalUser).isNotPresent();
+    }
+
+    @Test
+    public void testFindByEmail() {
+        String email = "ngoxuanchien@gmail.com";
+        User user = repo.findByEmail(email);
+
+        Assertions.assertThat(user).isNotNull();
+        Assertions.assertThat(user.getId()).isGreaterThan(0);
+        Assertions.assertThat(user.getEmail()).isEqualTo(email);
+    }
+
+    @Test
+    public void TestFindAllTaskByEmail() {
+        String email = "1234@gmail.com";
+        ArrayList<Task> taskList = (ArrayList<Task>)repo.findAllTaskByEmail(email);
+
+        for (Task task: taskList) {
+            System.out.println(task.getTask());
+        }
     }
 
 }

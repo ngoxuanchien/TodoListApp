@@ -12,3 +12,7 @@ CREATE TABLE users(
     password VARCHAR(50) NOT NULL,
     primary key (user_id)
 )
+
+SELECT t.id, t.task, t.user_id FROM tasks t
+JOIN users u on t.user_id = u.id
+WHERE u.email = "1234@gmail.com";
