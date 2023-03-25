@@ -6,6 +6,7 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Data
@@ -28,7 +29,7 @@ public class User {
     private String password;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
-    private Collection<Task> tasks;
+    private List<Task> tasks;
 
     public User() {
 
@@ -80,11 +81,11 @@ public class User {
         this.password = password;
     }
 
-    public Collection<Task> getTasks() {
+    public List<Task> getTasks() {
         return tasks;
     }
 
-    public void setTasks(Collection<Task> tasks) {
+    public void setTasks(List<Task> tasks) {
         this.tasks = tasks;
     }
 
@@ -96,6 +97,7 @@ public class User {
                 ", last_name='" + last_name + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
+                ", tasks= " + tasks + '\'' +
                 '}';
     }
 }

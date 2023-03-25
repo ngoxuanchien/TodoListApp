@@ -1,5 +1,6 @@
 package com.todolist_app.todolistapp;
 
+import com.google.gson.Gson;
 import com.todolist_app.todolistapp.model.Task;
 import com.todolist_app.todolistapp.model.User;
 import com.todolist_app.todolistapp.repository.UserRepository;
@@ -87,13 +88,14 @@ public class UserRepositoryTests {
     }
 
     @Test
-    public void TestFindAllTaskByEmail() {
-        String email = "1234@gmail.com";
-        ArrayList<Task> taskList = (ArrayList<Task>)repo.findAllTaskByEmail(email);
+    public void test() {
+        String jsonString = "{\"id\":\"4\",\"first_name\":\"Chien\",\"last_name\":\"Ngo\",\"email\":\"ngoxuanchien9a@gmail.com\",\"password\":\"$2a$10$M3mPtWFHatZesqXzEU9wtOX0wVGJXae7dKIJf/TbJoDWRskpvFCbu\",\"tasks\":[{\"id\":\"5\",\"task\":\"Do exercise\",\"user_id\":\"5\"}]}";
+        Gson gson = new Gson();
+        User user = gson.fromJson(jsonString, User.class);
 
-        for (Task task: taskList) {
-            System.out.println(task.getTask());
-        }
+        System.out.println(user);
+
+
     }
 
 }

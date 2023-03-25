@@ -4,6 +4,7 @@ import com.todolist_app.todolistapp.model.Task;
 import com.todolist_app.todolistapp.model.User;
 import com.todolist_app.todolistapp.repository.TaskRepository;
 import com.todolist_app.todolistapp.repository.UserRepository;
+import com.todolist_app.todolistapp.service.TaskService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +20,12 @@ import java.util.Optional;
 @Rollback(false)
 public class TaskRepositoryTests {
 
-    @Autowired private TaskRepository taskRepository;
-    @Autowired private UserRepository userRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private TaskRepository taskRepository;
+
 
     @Test
     public void testAddNew() {
@@ -46,11 +51,24 @@ public class TaskRepositoryTests {
 
     @Test
     public  void testFindAllByEmail() {
-        String email = "1234@gmail.com";
-        List<Task> taskList = taskRepository.findAllByEmail(email);
+        String email = "ngoxuanchien9a@gmail.com";
+        List<Task> taskList = taskRepository.getAllByEmail(email);
 
         for (Task task : taskList) {
             System.out.println(task.getTask());
         }
     }
+
+    @Test
+    public void testGetAllByEmail() {
+        Integer id = 4;
+        User user = userRepository.getById(id);
+        List<Task> tasks = taskRepository.getAllByUserId(user.getId());
+
+        for (Task task : tasks) {
+            System.out.println(task.getTask());
+        }
+    }
+
+
 }

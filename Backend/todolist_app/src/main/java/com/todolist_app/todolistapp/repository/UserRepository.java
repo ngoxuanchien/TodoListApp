@@ -11,8 +11,4 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     User findByEmail(String email);
 
-    @Query (value = "SELECT t.id, t.task, t.user_id FROM tasks t " +
-            "JOIN users u on t.user_id = u.id " +
-            "WHERE u.email = :email", nativeQuery = true)
-    Collection<Task> findAllTaskByEmail(String email);
 }
