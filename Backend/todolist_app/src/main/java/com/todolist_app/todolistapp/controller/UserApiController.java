@@ -1,24 +1,23 @@
 package com.todolist_app.todolistapp.controller;
 
 import com.todolist_app.todolistapp.model.Enum.RegisterStatus;
+import com.todolist_app.todolistapp.model.Login;
+import com.todolist_app.todolistapp.model.User;
 import com.todolist_app.todolistapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCrypt;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api")
-public class RegisterApiController {
+@RequestMapping("/api/user")
+public class UserApiController {
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
-    @PostMapping("/user/register")
+    @PostMapping("/register")
     public ResponseEntity registerNewUser(@RequestParam("first_name") String first_name,
                                           @RequestParam("last_name") String last_name,
                                           @RequestParam("email") String email,
@@ -53,5 +52,30 @@ public class RegisterApiController {
                 }
             }
         }
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity loginUser(@RequestBody Login login) {
+        // Get User Email:
+        User user = userService.checkUserEmail(login.getEmail());
+
+        // Check If Email Is Empty:
+        if (user == null) {
+            return new ResponseEntity<>("Email does not exist", HttpStatus.NOT_FOUND);
+        }
+        // End Of Check Email Is Empty.
+
+        // Get Hashed User Password:
+        String hashed_password = user.getPassword();
+
+        // Validate Get User Password:
+        if (!BCrypt.checkpw(login.getPassword(), hashed_password)) {
+            return  new ResponseEntity<>("Incorrect email or password", HttpStatus.BAD_REQUEST);
+        }
+
+
+
+        // Set User Object:
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 }

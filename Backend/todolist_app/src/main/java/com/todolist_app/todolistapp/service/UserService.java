@@ -4,6 +4,8 @@ import com.todolist_app.todolistapp.model.Enum.LoginStatus;
 import com.todolist_app.todolistapp.model.Enum.RegisterStatus;
 import com.todolist_app.todolistapp.model.User;
 import com.todolist_app.todolistapp.repository.UserRepository;
+import jakarta.persistence.EntityNotFoundException;
+import org.hibernate.annotations.NotFound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -35,8 +37,14 @@ public class UserService {
         return result;
     }
 
-    public LoginStatus loginUserServiceMethod(String email, String password) {
-        User user = userRepository.findByEmail(email);
-        return null;
+    public User checkUserEmail(String email) {
+        User user = null;
+        try {
+            user = userRepository.findByEmail(email);
+        } catch (EntityNotFoundException e) {
+            user = null;
+        }
+
+        return user;
     }
 }

@@ -24,9 +24,15 @@ public class TaskRepositoryTests {
 
     @Test
     public void testAddNew() {
-        Integer userId = 1;
+        Integer userId = 4;
         Optional<User> optionalUser = userRepository.findById(userId);
         User user = optionalUser.get();
+
+//        List<Task> tasks = (List)user.getTasks();
+//
+//        for (Task task : tasks) {
+//            System.out.println(task.getTask());
+//        }
 
         Task task = new Task();
         task.setTask("Do exercise");

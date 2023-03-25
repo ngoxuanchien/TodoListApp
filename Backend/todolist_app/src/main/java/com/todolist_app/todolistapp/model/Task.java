@@ -16,10 +16,8 @@ public class Task {
     @Column(nullable = false)
     private String task;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user.id", nullable = false)
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
     private User user;
 
     public Integer getId() {
