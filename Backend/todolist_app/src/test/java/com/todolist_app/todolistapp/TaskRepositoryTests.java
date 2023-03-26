@@ -20,11 +20,11 @@ import java.util.Optional;
 @Rollback(false)
 public class TaskRepositoryTests {
 
-
     @Autowired
     private UserRepository userRepository;
     @Autowired
     private TaskRepository taskRepository;
+
 
 
     @Test
@@ -68,6 +68,22 @@ public class TaskRepositoryTests {
         for (Task task : tasks) {
             System.out.println(task.getTask());
         }
+    }
+
+    @Autowired
+    TaskService taskService;
+
+    @Test void testGetAll() {
+
+        System.out.println(taskService);
+
+        Integer id = 4;
+        List<Task> tasks = taskService.getAllTask(id);
+
+        for (Task task : tasks) {
+            System.out.println(task.getTask());
+        }
+
     }
 
 

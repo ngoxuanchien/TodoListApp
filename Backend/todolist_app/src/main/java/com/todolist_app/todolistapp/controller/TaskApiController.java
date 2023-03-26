@@ -1,14 +1,13 @@
 package com.todolist_app.todolistapp.controller;
 
+import com.todolist_app.todolistapp.model.Mapper.TaskMapper;
 import com.todolist_app.todolistapp.model.Task;
+import com.todolist_app.todolistapp.model.DTO.TaskDTO;
 import com.todolist_app.todolistapp.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,14 +23,34 @@ public class TaskApiController {
         try {
             tasks = taskService.getAllTask(user_id);
         } catch (Exception e) {
-            return  new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return  new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
 
-        for (Task task : tasks) {
-            System.out.println(task);
+        return new ResponseEntity<>(tasks, HttpStatus.OK);
+    }
+
+    @GetMapping("/task/{task_id}")
+    public ResponseEntity<Task> getTask(@PathVariable Integer user_id,
+                                        @PathVariable Integer task_id) {
+        Task task = null;
+
+        try {
+            task = taskService.getTask(user_id, task_id);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
 
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity<>(task, HttpStatus.OK);
+    }
+
+    @PutMapping("/task/{task_id}")
+    public ResponseEntity<String> getTask(@PathVariable Integer user_id,
+                                    @PathVariable Integer task_id,
+                                    @RequestBody TaskDTO taskDTO) {
+
+        taskService.updateTask(task_id, taskDTO);
+
+        return new ResponseEntity<>("update stuccess", HttpStatus.OK);
     }
 
 }

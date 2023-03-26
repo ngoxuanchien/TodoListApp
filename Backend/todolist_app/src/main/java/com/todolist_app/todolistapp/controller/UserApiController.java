@@ -1,11 +1,8 @@
 package com.todolist_app.todolistapp.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.todolist_app.todolistapp.model.Enum.RegisterStatus;
 import com.todolist_app.todolistapp.model.Login;
 import com.todolist_app.todolistapp.model.User;
-import com.todolist_app.todolistapp.model.UserSerializer;
 import com.todolist_app.todolistapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -59,6 +56,7 @@ public class UserApiController {
 
     @PostMapping("/login")
     public ResponseEntity loginUser(@RequestBody Login login) {
+        System.out.println(login.getEmail());
         // Get User Email:
         User user = userService.checkUserEmail(login.getEmail());
 
@@ -76,22 +74,8 @@ public class UserApiController {
             return  new ResponseEntity<>("Incorrect email or password", HttpStatus.BAD_REQUEST);
         }
 
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleModule module = new SimpleModule();
-        module.addSerializer(User.class, new UserSerializer());
-        mapper.registerModule(module);
-
-        String json = null;
-
-        try {
-            json = mapper.writeValueAsString(user);
-
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-
         // Set User Object:
-        return new ResponseEntity<>(json, HttpStatus.OK);
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
 

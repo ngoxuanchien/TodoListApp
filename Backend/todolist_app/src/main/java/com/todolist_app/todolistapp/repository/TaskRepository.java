@@ -13,6 +13,10 @@ public interface TaskRepository extends JpaRepository<Task, Integer> {
             "WHERE u.email = :email", nativeQuery = true)
     List<Task> getAllByEmail(String email);
 
-    @Query(value = "SELECT * FROM tasks WHERE user_id = :user_id", nativeQuery = true)
+
+    @Query(value = "SELECT * FROM tasks t WHERE t.user_id = :user_id", nativeQuery = true)
     List<Task> getAllByUserId(Integer user_id);
+
+    @Query(value = "SELECT * FROM tasks t WHERE t.id = :id", nativeQuery = true)
+    Task getById(Integer id);
 }
