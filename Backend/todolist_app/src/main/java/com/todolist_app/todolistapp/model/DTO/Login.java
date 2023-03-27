@@ -1,4 +1,4 @@
-package com.todolist_app.todolistapp.model;
+package com.todolist_app.todolistapp.model.DTO;
 
 public class Login {
     private String email;

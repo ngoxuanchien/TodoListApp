@@ -1,7 +1,7 @@
 package com.todolist_app.todolistapp;
 
-import com.todolist_app.todolistapp.model.Task;
-import com.todolist_app.todolistapp.model.User;
+import com.todolist_app.todolistapp.model.Entity.Task;
+import com.todolist_app.todolistapp.model.Entity.User;
 import com.todolist_app.todolistapp.repository.TaskRepository;
 import com.todolist_app.todolistapp.repository.UserRepository;
 import com.todolist_app.todolistapp.service.TaskService;

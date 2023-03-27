@@ -1,12 +1,10 @@
-package com.todolist_app.todolistapp.model;
+package com.todolist_app.todolistapp.model.Entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.todolist_app.todolistapp.model.Entity.Task;
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
 
-import java.util.Collection;
 import java.util.List;
 
 @Entity

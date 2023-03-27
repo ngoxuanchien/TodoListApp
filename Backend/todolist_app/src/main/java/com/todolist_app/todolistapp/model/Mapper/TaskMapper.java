@@ -1,8 +1,7 @@
 package com.todolist_app.todolistapp.model.Mapper;
 
 import com.todolist_app.todolistapp.model.DTO.TaskDTO;
-import com.todolist_app.todolistapp.model.Task;
-import com.todolist_app.todolistapp.model.User;
+import com.todolist_app.todolistapp.model.Entity.Task;
 
 import java.util.ArrayList;
 import java.util.List;

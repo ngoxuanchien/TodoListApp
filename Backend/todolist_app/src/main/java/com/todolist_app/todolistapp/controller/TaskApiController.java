@@ -1,7 +1,6 @@
 package com.todolist_app.todolistapp.controller;
 
-import com.todolist_app.todolistapp.model.Mapper.TaskMapper;
-import com.todolist_app.todolistapp.model.Task;
+import com.todolist_app.todolistapp.model.Entity.Task;
 import com.todolist_app.todolistapp.model.DTO.TaskDTO;
 import com.todolist_app.todolistapp.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;

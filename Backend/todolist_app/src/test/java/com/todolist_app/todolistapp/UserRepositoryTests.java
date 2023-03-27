@@ -1,8 +1,7 @@
 package com.todolist_app.todolistapp;
 
 import com.google.gson.Gson;
-import com.todolist_app.todolistapp.model.Task;
-import com.todolist_app.todolistapp.model.User;
+import com.todolist_app.todolistapp.model.Entity.User;
 import com.todolist_app.todolistapp.repository.UserRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -11,9 +10,6 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.annotation.Rollback;
 
-import java.awt.*;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.Optional;
 
 @DataJpaTest

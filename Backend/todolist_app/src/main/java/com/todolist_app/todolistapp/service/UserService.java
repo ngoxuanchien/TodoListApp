@@ -1,11 +1,9 @@
 package com.todolist_app.todolistapp.service;
 
-import com.todolist_app.todolistapp.model.Enum.LoginStatus;
 import com.todolist_app.todolistapp.model.Enum.RegisterStatus;
-import com.todolist_app.todolistapp.model.User;
+import com.todolist_app.todolistapp.model.Entity.User;
 import com.todolist_app.todolistapp.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
-import org.hibernate.annotations.NotFound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;

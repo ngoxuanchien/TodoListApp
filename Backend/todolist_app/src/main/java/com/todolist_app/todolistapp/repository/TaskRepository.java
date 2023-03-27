@@ -1,6 +1,6 @@
 package com.todolist_app.todolistapp.repository;
 
-import com.todolist_app.todolistapp.model.Task;
+import com.todolist_app.todolistapp.model.Entity.Task;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -17,6 +17,6 @@ public interface TaskRepository extends JpaRepository<Task, Integer> {
     @Query(value = "SELECT * FROM tasks t WHERE t.user_id = :user_id", nativeQuery = true)
     List<Task> getAllByUserId(Integer user_id);
 
-    @Query(value = "SELECT * FROM tasks t WHERE t.id = :id", nativeQuery = true)
+//    @Query(value = "SELECT * FROM tasks t WHERE t.id = :id", nativeQuery = true)
     Task getById(Integer id);
 }

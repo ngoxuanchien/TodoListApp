@@ -1,12 +1,9 @@
 package com.todolist_app.todolistapp.service;
 
 import com.todolist_app.todolistapp.model.DTO.TaskDTO;
-import com.todolist_app.todolistapp.model.Task;
-import com.todolist_app.todolistapp.model.User;
+import com.todolist_app.todolistapp.model.Entity.Task;
 import com.todolist_app.todolistapp.repository.TaskRepository;
-import com.todolist_app.todolistapp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

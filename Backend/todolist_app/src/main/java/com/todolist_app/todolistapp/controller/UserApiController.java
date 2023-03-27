@@ -1,8 +1,8 @@
 package com.todolist_app.todolistapp.controller;
 
 import com.todolist_app.todolistapp.model.Enum.RegisterStatus;
-import com.todolist_app.todolistapp.model.Login;
-import com.todolist_app.todolistapp.model.User;
+import com.todolist_app.todolistapp.model.DTO.Login;
+import com.todolist_app.todolistapp.model.Entity.User;
 import com.todolist_app.todolistapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
