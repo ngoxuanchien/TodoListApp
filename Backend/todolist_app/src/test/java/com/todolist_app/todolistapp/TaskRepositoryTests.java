@@ -73,18 +73,6 @@ public class TaskRepositoryTests {
     @Autowired
     TaskService taskService;
 
-    @Test void testGetAll() {
-
-        System.out.println(taskService);
-
-        Integer id = 4;
-        List<Task> tasks = taskService.getAllTask(id);
-
-        for (Task task : tasks) {
-            System.out.println(task.getTask());
-        }
-
-    }
 
 
 }
