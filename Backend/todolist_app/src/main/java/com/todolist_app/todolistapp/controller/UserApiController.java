@@ -1,5 +1,6 @@
 package com.todolist_app.todolistapp.controller;
 
+import com.todolist_app.todolistapp.model.DTO.UserDTO;
 import com.todolist_app.todolistapp.model.Enum.RegisterStatus;
 import com.todolist_app.todolistapp.model.DTO.Login;
 import com.todolist_app.todolistapp.model.Entity.User;
@@ -58,16 +59,16 @@ public class UserApiController {
     public ResponseEntity loginUser(@RequestBody Login login) {
         System.out.println(login.getEmail());
         // Get User Email:
-        User user = userService.checkUserEmail(login.getEmail());
+        UserDTO userDTO = userService.checkUserEmail(login.getEmail());
 
         // Check If Email Is Empty:
-        if (user == null) {
+        if (userDTO == null) {
             return new ResponseEntity<>("Email does not exist", HttpStatus.NOT_FOUND);
         }
         // End Of Check Email Is Empty.
 
         // Get Hashed User Password:
-        String hashed_password = user.getPassword();
+        String hashed_password = userDTO.getPassword();
 
         // Validate Get User Password:
         if (!BCrypt.checkpw(login.getPassword(), hashed_password)) {
@@ -75,7 +76,7 @@ public class UserApiController {
         }
 
         // Set User Object:
-        return new ResponseEntity<>(user, HttpStatus.OK);
+        return new ResponseEntity<>(userDTO, HttpStatus.OK);
     }
 
 

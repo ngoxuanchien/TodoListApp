@@ -1,7 +1,9 @@
 package com.todolist_app.todolistapp.service;
 
+import com.todolist_app.todolistapp.model.DTO.UserDTO;
 import com.todolist_app.todolistapp.model.Enum.RegisterStatus;
 import com.todolist_app.todolistapp.model.Entity.User;
+import com.todolist_app.todolistapp.model.Mapper.UserMapper;
 import com.todolist_app.todolistapp.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,14 +37,17 @@ public class UserService {
         return result;
     }
 
-    public User checkUserEmail(String email) {
+    public UserDTO checkUserEmail(String email) {
         User user = null;
         try {
             user = userRepository.findByEmail(email);
         } catch (EntityNotFoundException e) {
+            System.out.println();
             user = null;
         }
 
-        return user;
+
+        UserDTO userDTO = UserMapper.toUserDTO(user);
+        return userDTO;
     }
 }
