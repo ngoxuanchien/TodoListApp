@@ -73,15 +73,7 @@ public class UserRepositoryTests {
         Assertions.assertThat(optionalUser).isNotPresent();
     }
 
-    @Test
-    public void testFindByEmail() {
-        String email = "ngoxuanchien@gmail.com";
-        User user = repo.findByEmail(email);
 
-        Assertions.assertThat(user).isNotNull();
-        Assertions.assertThat(user.getId()).isGreaterThan(0);
-        Assertions.assertThat(user.getEmail()).isEqualTo(email);
-    }
 
     @Test
     public void test() {

@@ -37,17 +37,17 @@ public class UserService {
         return result;
     }
 
-    public UserDTO checkUserEmail(String email) {
-        User user = null;
-        try {
-            user = userRepository.findByEmail(email);
-        } catch (EntityNotFoundException e) {
-            System.out.println();
-            user = null;
-        }
-
-
-        UserDTO userDTO = UserMapper.toUserDTO(user);
-        return userDTO;
-    }
+//    public UserDTO checkUserEmail(String email) {
+//        User user = null;
+//        try {
+//            user = userRepository.findByEmail(email);
+//        } catch (EntityNotFoundException e) {
+//            System.out.println();
+//            user = null;
+//        }
+//
+//
+//        UserDTO userDTO = UserMapper.toUserDTO(user);
+//        return userDTO;
+//    }
 }

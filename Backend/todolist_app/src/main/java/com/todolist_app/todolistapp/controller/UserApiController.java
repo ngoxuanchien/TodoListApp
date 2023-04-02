@@ -55,29 +55,29 @@ public class UserApiController {
         }
     }
 
-    @PostMapping("/login")
-    public ResponseEntity loginUser(@RequestBody Login login) {
-        System.out.println(login.getEmail());
-        // Get User Email:
-        UserDTO userDTO = userService.checkUserEmail(login.getEmail());
-
-        // Check If Email Is Empty:
-        if (userDTO == null) {
-            return new ResponseEntity<>("Email does not exist", HttpStatus.NOT_FOUND);
-        }
-        // End Of Check Email Is Empty.
-
-        // Get Hashed User Password:
-        String hashed_password = userDTO.getPassword();
-
-        // Validate Get User Password:
-        if (!BCrypt.checkpw(login.getPassword(), hashed_password)) {
-            return  new ResponseEntity<>("Incorrect email or password", HttpStatus.BAD_REQUEST);
-        }
-
-        // Set User Object:
-        return new ResponseEntity<>(userDTO, HttpStatus.OK);
-    }
+//    @PostMapping("/login")
+//    public ResponseEntity loginUser(@RequestBody Login login) {
+//        System.out.println(login.getEmail());
+//        // Get User Email:
+//        UserDTO userDTO = userService.checkUserEmail(login.getEmail());
+//
+//        // Check If Email Is Empty:
+//        if (userDTO == null) {
+//            return new ResponseEntity<>("Email does not exist", HttpStatus.NOT_FOUND);
+//        }
+//        // End Of Check Email Is Empty.
+//
+//        // Get Hashed User Password:
+//        String hashed_password = userDTO.getPassword();
+//
+//        // Validate Get User Password:
+//        if (!BCrypt.checkpw(login.getPassword(), hashed_password)) {
+//            return  new ResponseEntity<>("Incorrect email or password", HttpStatus.BAD_REQUEST);
+//        }
+//
+//        // Set User Object:
+//        return new ResponseEntity<>(userDTO, HttpStatus.OK);
+//    }
 
 
 }
