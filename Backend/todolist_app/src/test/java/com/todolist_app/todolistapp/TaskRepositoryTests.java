@@ -51,12 +51,7 @@ public class TaskRepositoryTests {
 
     @Test
     public  void testFindAllByEmail() {
-        String email = "ngoxuanchien9a@gmail.com";
-        List<Task> taskList = taskRepository.getAllByEmail(email);
 
-        for (Task task : taskList) {
-            System.out.println(task.getTask());
-        }
     }
 
     @Test

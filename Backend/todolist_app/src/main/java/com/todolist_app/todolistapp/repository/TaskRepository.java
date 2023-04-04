@@ -4,19 +4,18 @@ import com.todolist_app.todolistapp.model.Entity.Task;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public interface TaskRepository extends JpaRepository<Task, Integer> {
 
-    @Query(value = "SELECT t.id, t.task, t.user_id FROM tasks t " +
+    @Query(value = "SELECT t.id, t.task, t.user_id, t.status FROM tasks t " +
             "JOIN users u on t.user_id = u.id " +
             "WHERE u.email = :email", nativeQuery = true)
-    List<Task> getAllByEmail(String email);
+    Optional<ArrayList<Task>> getAllByEmail(String email);
 
 
     @Query(value = "SELECT * FROM tasks t WHERE t.user_id = :user_id", nativeQuery = true)
     List<Task> getAllByUserId(Integer user_id);
-
-//    @Query(value = "SELECT * FROM tasks t WHERE t.id = :id", nativeQuery = true)
-    Task getById(Integer id);
 }

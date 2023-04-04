@@ -1,4 +1,4 @@
-package com.todolist_app.todolistapp.controller;
+package com.todolist_app.todolistapp.model.auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuthenticationResponse {
-    private String token;
+public class TaskRequest {
+    private String task;
+    private String status;
 }

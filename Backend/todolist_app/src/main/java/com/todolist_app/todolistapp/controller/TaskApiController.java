@@ -1,60 +1,58 @@
 package com.todolist_app.todolistapp.controller;
 
+import com.todolist_app.todolistapp.model.Entity.Task;
+import com.todolist_app.todolistapp.model.auth.TaskRequest;
+import com.todolist_app.todolistapp.model.auth.TaskResponse;
+import com.todolist_app.todolistapp.service.JwtService;
 import com.todolist_app.todolistapp.service.TaskService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/user/{user_id}")
+@RequestMapping("/api/v1")
 public class TaskApiController {
     @Autowired
     private TaskService taskService;
 
-//    @GetMapping("/tasks")
-//    public ResponseEntity<List<TaskDTO>> getAllTasks(@PathVariable Integer user_id) {
-//        List<TaskDTO> taskDTOs = taskService.getAllTask(user_id);
-//
-//        if (taskDTOs == null) {
-//            return  new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-//        }
-//
-//        return new ResponseEntity<>(taskDTOs, HttpStatus.OK);
-//    }
-//
-//    @GetMapping("/task/{task_id}")
-//    public ResponseEntity<TaskDTO> getTask(@PathVariable Integer user_id,
-//                                        @PathVariable Integer task_id) {
-//        TaskDTO taskDTO = taskService.getTask(user_id, task_id);
-//
-//        if (taskDTO == null) {
-//            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-//        }
-//
-//        return new ResponseEntity<>(taskDTO, HttpStatus.OK);
-//    }
-//
-//    @PutMapping("/task/{task_id}/update")
-//    public ResponseEntity<String> updateTask(@PathVariable Integer task_id,
-//                                    @RequestBody TaskDTO taskDTO) {
-//
-//        if (!taskService.updateTask(task_id, taskDTO)) {
-//            return new ResponseEntity<>("update failed", HttpStatus.BAD_REQUEST);
-//        }
-//
-//        return new ResponseEntity<>("update stuccess", HttpStatus.OK);
-//    }
-//
-//    @DeleteMapping("task/{task_id}/delete")
-//    public ResponseEntity<String> deleteTask(@PathVariable Integer task_id) {
-//        if (!taskService.deleteTask(task_id)) {
-//            return new ResponseEntity<>("delete failed", HttpStatus.BAD_REQUEST);
-//        }
-//
-//        return new ResponseEntity<>("delete success", HttpStatus.OK);
-//    }
+    @GetMapping("/task/all")
+    public ResponseEntity<List<TaskResponse>> getTasks() {
+        return ResponseEntity.ok(taskService.getTasks());
+    }
+
+    @GetMapping("/task/{id}")
+    public ResponseEntity<TaskResponse> getTask(
+            @PathVariable Integer id
+    ) {
+        return ResponseEntity.ok(taskService.getTask(id));
+    }
+
+    @PostMapping("task/add")
+    public ResponseEntity<TaskResponse> addTask(
+            @RequestBody TaskRequest taskRequest
+    ) {
+        return ResponseEntity.ok(taskService.addTask(taskRequest));
+    }
+
+    @DeleteMapping("task/delete/{id}")
+    public ResponseEntity<String> deleteTask(
+            @PathVariable Integer id
+    ) {
+        return ResponseEntity.ok(taskService.deleteTask(id));
+    }
+
+    @PutMapping("task/update/{id}")
+    public ResponseEntity<TaskResponse> updateTask(
+            @PathVariable Integer id,
+            @RequestBody TaskRequest taskRequest
+    ) {
+        return ResponseEntity.ok(taskService.updateTask(id, taskRequest));
+    }
 
 }

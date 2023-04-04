@@ -1,9 +1,11 @@
-package com.todolist_app.todolistapp.controller;
+package com.todolist_app.todolistapp.service;
 
+import com.todolist_app.todolistapp.model.auth.AuthenticationRequest;
+import com.todolist_app.todolistapp.model.auth.AuthenticationResponse;
+import com.todolist_app.todolistapp.model.auth.RegisterRequest;
 import com.todolist_app.todolistapp.model.Entity.Role;
 import com.todolist_app.todolistapp.model.Entity.User;
 import com.todolist_app.todolistapp.repository.UserRepository;
-import com.todolist_app.todolistapp.service.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

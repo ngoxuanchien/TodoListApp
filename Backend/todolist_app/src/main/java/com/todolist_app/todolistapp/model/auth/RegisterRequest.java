@@ -1,4 +1,4 @@
-package com.todolist_app.todolistapp.controller;
+package com.todolist_app.todolistapp.model.auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

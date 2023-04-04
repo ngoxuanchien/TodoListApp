@@ -1,45 +1,107 @@
 package com.todolist_app.todolistapp.service;
 
 import com.todolist_app.todolistapp.model.Entity.Task;
+import com.todolist_app.todolistapp.model.Entity.User;
+import com.todolist_app.todolistapp.model.auth.TaskRequest;
+import com.todolist_app.todolistapp.model.auth.TaskResponse;
 import com.todolist_app.todolistapp.repository.TaskRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
+import com.todolist_app.todolistapp.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class TaskService {
-    @Autowired
-    private TaskRepository taskRepository;
+    private final TaskRepository taskRepository;
+    private final UserRepository userRepository;
 
-//    public List<TaskDTO> getAllTask(Integer user_id) {
-//        List<Task> tasks = taskRepository.getAllByUserId(user_id);
-//        List<TaskDTO> taskDTOs = TaskMapper.toTaskDTOs(tasks);
-//
-//        return taskDTOs;
-//    }
-//
-//    public TaskDTO getTask(Integer user_id, Integer task_id) {
-//        Task task = taskRepository.getById(task_id);
-//        return TaskMapper.toTaskDTO(task);
-//    }
-//
-//    public boolean updateTask(Integer task_id, TaskDTO taskDTO) {
-//        Task task = taskRepository.getById(task_id);
-//        task.setTask(taskDTO.getTask());
-//        taskRepository.save(task);
-//        return true;
-//    }
-//
-//    public boolean deleteTask(Integer task_id) {
-//        try {
-//            taskRepository.deleteById(task_id);
-//        } catch (Exception e) {
-//            System.out.println(e.getMessage());
-//            return false;
-//        }
-//
-//        return true;
-//    }
+    public List<TaskResponse> getTasks() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+        List<Task> tasks = taskRepository.getAllByEmail(email).orElseThrow();
+
+        return tasks.stream()
+                .map(TaskResponse::convertToResponse)
+                .collect(Collectors.toList());
+    }
+
+    public TaskResponse addTask(TaskRequest taskRequest) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+        Optional<User> user = userRepository.findByEmail(email);
+
+        var task = Task.builder()
+                .task(taskRequest.getTask())
+                .status(taskRequest.getStatus())
+                .user(user.orElseThrow())
+                .build();
+        taskRepository.save(task);
+
+        return TaskResponse.builder()
+                .id(task.getId())
+                .task(task.getTask())
+                .status(task.getStatus())
+                .build();
+    }
+
+    public String deleteTask(Integer id) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+        User user = userRepository.findByEmail(email).orElseThrow();
+        Task task = taskRepository.findById(id).orElseThrow();
+
+        if (user.getTasks().contains(task)) {
+            taskRepository.deleteById(id);
+        } else {
+            return "Delete failed";
+        }
+        return "Delete Success";
+    }
+
+    public TaskResponse getTask(Integer id) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+        User user = userRepository.findByEmail(email).orElseThrow();
+        Task task = taskRepository.findById(id).orElseThrow();
+
+        if (user.getTasks().contains(task)) {
+
+        } else {
+            return null;
+        }
+
+        return TaskResponse.builder()
+                .id(task.getId())
+                .task(task.getTask())
+                .status(task.getStatus())
+                .build();
+    }
+
+    public TaskResponse updateTask(Integer id, TaskRequest taskRequest) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+        User user = userRepository.findByEmail(email).orElseThrow();
+        Task task = taskRepository.findById(id).orElseThrow();
+
+        if (user.getTasks().contains(task)) {
+            task.setTask(taskRequest.getTask());
+            task.setStatus(taskRequest.getStatus());
+        } else {
+            return null;
+        }
+
+        return TaskResponse.builder()
+                .id(task.getId())
+                .task(task.getTask())
+                .status(task.getStatus())
+                .build();
+    }
 }

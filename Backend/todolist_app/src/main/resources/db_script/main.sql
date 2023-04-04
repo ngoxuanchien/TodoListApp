@@ -16,3 +16,5 @@ CREATE TABLE users(
 SELECT t.id, t.task, t.user_id FROM tasks t
 JOIN users u on t.user_id = u.id
 WHERE u.email = "1234@gmail.com";
+
+ALTER TABLE

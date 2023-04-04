@@ -1,7 +1,12 @@
 package com.todolist_app.todolistapp.controller;
 
+
+
+import com.todolist_app.todolistapp.model.auth.AuthenticationRequest;
+import com.todolist_app.todolistapp.model.auth.AuthenticationResponse;
+import com.todolist_app.todolistapp.model.auth.RegisterRequest;
+import com.todolist_app.todolistapp.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +20,6 @@ public class AuthenticationController {
     public ResponseEntity<AuthenticationResponse> register(
             @RequestBody RegisterRequest request
     ) {
-        System.out.println(request);
         return ResponseEntity.ok(service.register(request));
     }
 

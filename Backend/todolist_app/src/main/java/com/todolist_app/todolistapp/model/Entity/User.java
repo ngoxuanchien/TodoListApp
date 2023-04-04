@@ -44,13 +44,6 @@ public class User implements UserDetails {
 
     private Role role;
 
-//    public User(String first_name, String last_name, String email, String password) {
-//        setFirst_name(first_name);
-//        setLast_name(last_name);
-//        setEmail(email);
-//        setPassword(password);
-//    }
-
     @Override
     public String toString() {
         return "User{" +
