@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">ToDo</string>
+
+    <!-- For Sign Up Page / Activity -->
+    <string name="go_to_sign_in">Already have an account? Sign In</string>
+
+    <!-- For Sign In Page / Activity -->
+    <string name="go_to_sign_up">Don\'t have an account? Sign Up</string>
+</resources>
