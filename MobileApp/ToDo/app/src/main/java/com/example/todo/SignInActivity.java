@@ -1,7 +1,7 @@
 package com.example.todo;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.view.View;
 import android.widget.Button;
@@ -11,8 +11,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.todo.Helpers.StringHelper;
@@ -23,7 +21,8 @@ public class SignInActivity extends AppCompatActivity {
 
     Button _signInBtn;
     EditText _email, _password;
-    @SuppressLint("MissingInflatedId")
+    final String url = StringHelper.url + "/api/v1/auth/authenticate";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,21 +33,18 @@ public class SignInActivity extends AppCompatActivity {
 
         _signInBtn = findViewById(R.id.sign_in_btn);
 
-        _signInBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                try {
-                    authenticatedUser();
-                } catch (JSONException e) {
-                    throw new RuntimeException(e);
-                }
+        _signInBtn.setOnClickListener(view -> {
+            try {
+                authenticatedUser();
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
             }
         });
     }
 
     private boolean validateEmail() {
         String email = _email.getText().toString();
-        boolean result = true;
+        boolean result;
 
         if (email.isEmpty()) {
             _email.setError("Email cannot empty!");
@@ -66,7 +62,7 @@ public class SignInActivity extends AppCompatActivity {
 
     private boolean validatePassword() {
         String password = _password.getText().toString();
-        boolean result = true;
+        boolean result;
 
         if (password.isEmpty()) {
             _password.setError("Password cannot be empty!");
@@ -80,11 +76,7 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     private void authenticatedUser() throws JSONException {
-        if (validateEmail() || validatePassword()) {
-            String url = StringHelper.url + "/api/v1/auth/authenticate";
-
-            RequestQueue queue = Volley.newRequestQueue(SignInActivity.this);
-
+        if (validateEmail() && validatePassword()) {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("email", _email.getText());
             jsonObject.put("password", _password.getText());
@@ -93,33 +85,35 @@ public class SignInActivity extends AppCompatActivity {
                     Request.Method.POST,
                     url,
                     jsonObject,
-                    new Response.Listener<JSONObject>() {
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
-                            SharedPreferences.Editor editor = sharedPref.edit();
-                            try {
-                                editor.putString("jwtToken", response.getString("token"));
-                            } catch (JSONException e) {
-                                throw new RuntimeException(e);
-                            }
-                            editor.apply();
+                    response -> {
+                        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPref.edit();
+                        try {
+                            editor.putString("jwtToken", response.getString("token"));
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
                         }
-                    }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    System.out.println(error.getMessage());
-                    Toast.makeText(SignInActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
-                }
-            });
+                        editor.apply();
+                    }, error -> {
+                        System.out.println(error.getMessage());
+                        Toast.makeText(SignInActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
+                    });
 
             RequestQueue requestQueue = Volley.newRequestQueue(SignInActivity.this);
             requestQueue.add(jsonObjectRequest);
-        } else {
-            // do nothing
-        }
+        }  // do nothing
+
     }
 
     public void gotoSignUpAct(View view) {
+        Intent intent = new Intent(SignInActivity.this, SignUpActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    public void goToHome(View view) {
+        Intent intent = new Intent(SignInActivity.this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 }
