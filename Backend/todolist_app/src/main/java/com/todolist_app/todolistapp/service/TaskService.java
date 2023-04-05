@@ -39,16 +39,20 @@ public class TaskService {
         Optional<User> user = userRepository.findByEmail(email);
 
         var task = Task.builder()
-                .task(taskRequest.getTask())
-                .status(taskRequest.getStatus())
+                .title(taskRequest.getTitle())
+                .description(taskRequest.getDescription())
+                .createdTime(taskRequest.getCreatedTime())
                 .user(user.orElseThrow())
                 .build();
         taskRepository.save(task);
 
+        System.out.println(task.getDescription());
+
         return TaskResponse.builder()
                 .id(task.getId())
-                .task(task.getTask())
-                .status(task.getStatus())
+                .title(task.getTitle())
+                .description(task.getDescription())
+                .createdTime(task.getCreatedTime())
                 .build();
     }
 
@@ -80,8 +84,9 @@ public class TaskService {
 
         return TaskResponse.builder()
                 .id(task.getId())
-                .task(task.getTask())
-                .status(task.getStatus())
+                .title(task.getTitle())
+                .description(task.getDescription())
+                .createdTime(task.getCreatedTime())
                 .build();
     }
 
@@ -92,16 +97,18 @@ public class TaskService {
         Task task = taskRepository.findById(id).orElseThrow();
 
         if (user.getTasks().contains(task)) {
-            task.setTask(taskRequest.getTask());
-            task.setStatus(taskRequest.getStatus());
+            task.setTitle(taskRequest.getTitle());
+            task.setDescription(taskRequest.getDescription());
+            taskRepository.save(task);
         } else {
             return null;
         }
 
         return TaskResponse.builder()
                 .id(task.getId())
-                .task(task.getTask())
-                .status(task.getStatus())
+                .title(task.getTitle())
+                .description(task.getDescription())
+                .createdTime(task.getCreatedTime())
                 .build();
     }
 }

@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public interface TaskRepository extends JpaRepository<Task, Integer> {
 
-    @Query(value = "SELECT t.id, t.task, t.user_id, t.status FROM tasks t " +
+    @Query(value = "SELECT t.id, t.title, t.user_id, t.description, t.created_time FROM tasks t " +
             "JOIN users u on t.user_id = u.id " +
             "WHERE u.email = :email", nativeQuery = true)
     Optional<ArrayList<Task>> getAllByEmail(String email);

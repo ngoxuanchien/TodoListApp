@@ -14,6 +14,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.todo.Helpers.StringHelper;
+import com.example.todo.Helpers.TokenManager;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -23,11 +24,14 @@ public class SignUpActivity extends AppCompatActivity {
     Button _signUpBtn;
     final String url = StringHelper.url + "/api/v1/auth/register";
 
+    TokenManager _tokenManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+
+        _tokenManager = new TokenManager(SignUpActivity.this);
 
         _firstName = findViewById(R.id.first_name);
         _lastName = findViewById(R.id.last_name);
@@ -128,17 +132,14 @@ public class SignUpActivity extends AppCompatActivity {
                     url,
                     jsonObject,
                     response -> {
-                        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sharedPref.edit();
                         try {
-                            editor.putString("jwtToken", response.getString("token"));
+                            _tokenManager.saveToken(response.getString("token"));
                         } catch (JSONException e) {
                             throw new RuntimeException(e);
                         }
-                        editor.apply();
                     }, error -> {
                         System.out.println(error.getMessage());
-                        Toast.makeText(SignUpActivity.this, "Register error", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SignUpActivity.this, "Register error", Toast.LENGTH_LONG).show();
                     });
 
             RequestQueue requestQueue = Volley.newRequestQueue(SignUpActivity.this);
@@ -154,7 +155,7 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     public void goToHome(View view) {
-        Intent intent = new Intent(SignUpActivity.this, SignInActivity.class);
+        Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
         startActivity(intent);
         finish();
     }

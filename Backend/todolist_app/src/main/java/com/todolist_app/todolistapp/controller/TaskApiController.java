@@ -1,19 +1,14 @@
 package com.todolist_app.todolistapp.controller;
 
-import com.todolist_app.todolistapp.model.Entity.Task;
 import com.todolist_app.todolistapp.model.auth.TaskRequest;
 import com.todolist_app.todolistapp.model.auth.TaskResponse;
-import com.todolist_app.todolistapp.service.JwtService;
 import com.todolist_app.todolistapp.service.TaskService;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1")

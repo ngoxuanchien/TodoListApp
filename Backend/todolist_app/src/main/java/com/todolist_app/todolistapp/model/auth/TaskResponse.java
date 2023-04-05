@@ -7,16 +7,15 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.modelmapper.ModelMapper;
 
-import java.util.function.Function;
-
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class TaskResponse {
     private Integer id;
-    private String task;
-    private String status;
+    private String title;
+    private String description;
+    private long createdTime;
 
     private static final ModelMapper modelMapper = new ModelMapper();
 
