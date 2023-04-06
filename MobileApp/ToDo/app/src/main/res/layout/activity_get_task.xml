@@ -5,29 +5,30 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="15dp"
+        android:padding="20dp"
         android:background="@drawable/alt_bg_img"
-        tools:context=".ProfileActivity">
+        tools:context=".GetTaskActivity">
 
     <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:srcCompat="@drawable/alt_img"
-            android:id="@+id/imageView2"
+            android:id="@+id/imageView"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="16dp"/>
+            android:layout_marginTop="30dp"/>
 
     <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Profile"
+            android:text="Task"
+            android:gravity="center"
             android:textColor="@color/white"
             android:textSize="30sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView2"
+            app:layout_constraintTop_toBottomOf="@+id/imageView"
             android:layout_marginTop="32dp"/>
 
     <LinearLayout
@@ -37,54 +38,33 @@
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView2">
+            app:layout_constraintTop_toBottomOf="@+id/textView">
 
-        <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:layout_gravity="center">
-
-            <TextView
-                    android:id="@+id/first_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="20sp"
-                    android:editable="false"
-                    android:textColor="@color/white"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginEnd="10dp"
-                    tools:ignore="Deprecated"/>
-
-            <TextView
-                    android:id="@+id/last_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="20sp"
-                    android:textColor="@color/white"
-                    android:editable="false"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:layout_marginTop="20dp"
-                    tools:ignore="Deprecated"/>
-        </LinearLayout>
-
-
-        <TextView
-                android:id="@+id/email"
-                android:layout_width="match_parent"
+        <EditText
+                android:id="@+id/title"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"
+                android:layout_width="match_parent"
+                android:padding="10dp"
                 android:editable="false"
-                android:textColor="@color/white"
-                app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/input_text_field_styling"
+                tools:ignore="Deprecated"/>
+
+        <EditText
+                android:id="@+id/description"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:padding="10dp"
+                android:editable="false"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/input_text_field_styling"
+                android:lines="5"
+                android:gravity="top"
                 tools:ignore="Deprecated"/>
 
         <GridLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
                 android:columnCount="2"
                 android:rowCount="1"
                 android:padding="10dp">
@@ -93,23 +73,44 @@
                     android:layout_width="150dp"
                     android:layout_height="50dp"
                     android:layout_column="0"
-                    android:text="Back"
-                    android:onClick="goToTaskAct"
+                    android:text="Delete"
+                    android:onClick="goToDeleteAct"
                     android:layout_marginEnd="10dp"
                     android:layout_gravity="center"
-                    android:background="@drawable/sign_out_styling"/>
+                    android:background="@drawable/alt_btn_styling"/>
 
             <Button
-                    android:id="@+id/editBtn"
                     android:layout_width="150dp"
                     android:layout_height="50dp"
                     android:layout_column="1"
                     android:layout_gravity="center"
+                    android:onClick="goToEditAct"
                     android:text="Edit"
                     android:textSize="16sp"
                     android:background="@drawable/main_btn_styling"/>
+
+
+
+
         </GridLayout>
 
     </LinearLayout>
+
+    <Button
+            android:text="Back"
+            android:padding="10dp"
+            android:textSize="12sp"
+            android:onClick="goToTaskAct"
+            android:background="@color/dark_royal_purple"
+            android:textColor="@color/tropical_blue"
+            android:layout_width="159dp"
+            android:layout_height="52dp"
+            android:id="@+id/button"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/details_layout"
+            app:layout_constraintVertical_bias="0.271"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -44,7 +44,7 @@ public class EditTaskActivity extends AppCompatActivity {
     }
 
     private void SaveTask() throws JSONException {
-        url = url + String.valueOf(_task.getId());
+        url = url + _task.getId();
         HashMap<String, String> headers = new HashMap<>();
         headers.put("Authorization", "Bearer " + _tokenManager.getToken());
 

@@ -43,14 +43,14 @@ public class SignUpActivity extends AppCompatActivity {
 
         _signUpBtn.setOnClickListener(view -> {
             try {
-                processFormFields();
+                ProcessFormFields();
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }
         });
     }
 
-    private boolean validateEmail() {
+    private boolean ValidateEmail() {
         String email = _email.getText().toString();
         boolean result;
 
@@ -68,7 +68,7 @@ public class SignUpActivity extends AppCompatActivity {
         return result;
     }
 
-    private boolean validateFirstName() {
+    private boolean ValidateFirstName() {
         boolean result;
         String firstName = _firstName.getText().toString();
 
@@ -83,7 +83,7 @@ public class SignUpActivity extends AppCompatActivity {
         return result;
     }
 
-    public boolean validateLastName() {
+    public boolean ValidateLastName() {
         boolean result;
         String lastName = _lastName.getText().toString();
 
@@ -98,7 +98,7 @@ public class SignUpActivity extends AppCompatActivity {
         return result;
     }
 
-    public boolean validatePasswordAndConfirm() {
+    public boolean ValidatePasswordAndConfirm() {
         boolean result;
         String password = _password.getText().toString();
         String confirm = _confirm.getText().toString();
@@ -118,9 +118,9 @@ public class SignUpActivity extends AppCompatActivity {
         return result;
     }
 
-    private void processFormFields() throws JSONException {
+    private void ProcessFormFields() throws JSONException {
 
-        if (validateFirstName() && validateLastName() && validateEmail() && validatePasswordAndConfirm()) {
+        if (ValidateFirstName() && ValidateLastName() && ValidateEmail() && ValidatePasswordAndConfirm()) {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("firstname", _firstName.getText());
             jsonObject.put("lastname", _lastName.getText());
@@ -133,7 +133,14 @@ public class SignUpActivity extends AppCompatActivity {
                     jsonObject,
                     response -> {
                         try {
-                            _tokenManager.saveToken(response.getString("token"));
+                            if (response.getString("token").equals("Email was exist")) {
+                                Toast.makeText(SignUpActivity.this, "Email was exist", Toast.LENGTH_LONG).show();
+                            } else {
+                                _tokenManager.saveToken(response.getString("token"));
+                                Intent intent = new Intent(SignUpActivity.this, TaskActivity.class);
+                                startActivity(intent);
+                                finish();
+                            }
                         } catch (JSONException e) {
                             throw new RuntimeException(e);
                         }

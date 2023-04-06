@@ -1,4 +1,4 @@
-package com.todolist_app.todolistapp.controller;
+package com.todolist_app.todolistapp.model.auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,5 +13,4 @@ public class UserResponse {
     private String firstname;
     private String lastname;
     private String email;
-    private String password;
 }

@@ -1,12 +1,10 @@
 package com.todolist_app.todolistapp.service;
 
-import com.todolist_app.todolistapp.controller.UserResponse;
+import com.todolist_app.todolistapp.model.auth.UserResponse;
 import com.todolist_app.todolistapp.model.Entity.User;
 import com.todolist_app.todolistapp.model.auth.RegisterRequest;
 import com.todolist_app.todolistapp.repository.UserRepository;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -26,7 +24,6 @@ public class UserService {
                 .firstname(user.getFirst_name())
                 .lastname(user.getLast_name())
                 .email(user.getEmail())
-                .password(user.getPassword())
                 .build();
     }
 
@@ -37,13 +34,13 @@ public class UserService {
 
         user.setFirst_name(newUser.getFirstname());
         user.setLast_name(newUser.getLastname());
-        user.setPassword(newUser.getPassword());
+
+        userRepository.save(user);
 
         return UserResponse.builder()
                 .firstname(user.getFirst_name())
                 .lastname(user.getLast_name())
                 .email(user.getEmail())
-                .password(user.getPassword())
                 .build();
     }
 }

@@ -1,13 +1,17 @@
 package com.example.todo.Helpers;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.*;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import com.example.todo.DeleteTaskActivity;
 import com.example.todo.EditTaskActivity;
+import com.example.todo.GetTaskActivity;
 import com.example.todo.R;
 import lombok.*;
 import org.jetbrains.annotations.NotNull;
@@ -43,6 +47,15 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHoler> {
         String formatedTime = DateFormat.getDateTimeInstance().format(task.getTimeCreated());
         holder.timeCreated.setText(formatedTime);
 
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(context, GetTaskActivity.class);
+            intent.putExtra("id", task.getId());
+            intent.putExtra("title", task.getTitle());
+            intent.putExtra("description", task.getDescription());
+            intent.putExtra("timeCreated", task.getTimeCreated());
+            context.startActivity(intent);
+        });
+
         holder.itemView.setOnLongClickListener(view -> {
             PopupMenu menu = new PopupMenu(context, view);
             menu.getMenu().add("DELETE");
@@ -50,6 +63,25 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHoler> {
 
             menu.setOnMenuItemClickListener(menuItem -> {
                 if (menuItem.getTitle().equals("DELETE")) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setTitle("Delete task");
+                    builder.setMessage("Are you sure to delete this task?");
+                    builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent intent = new Intent(context, DeleteTaskActivity.class);
+                            intent.putExtra("id", task.getId());
+                            context.startActivity(intent);
+                        }
+                    });
+                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
                 } else if (menuItem.getTitle().equals("EDIT")) {
                     Intent intent = new Intent(context, EditTaskActivity.class);
                     intent.putExtra("id", task.getId());

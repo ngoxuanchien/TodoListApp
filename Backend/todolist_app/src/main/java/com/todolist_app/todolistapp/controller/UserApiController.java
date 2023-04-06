@@ -1,6 +1,7 @@
 package com.todolist_app.todolistapp.controller;
 
 import com.todolist_app.todolistapp.model.auth.RegisterRequest;
+import com.todolist_app.todolistapp.model.auth.UserResponse;
 import com.todolist_app.todolistapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
