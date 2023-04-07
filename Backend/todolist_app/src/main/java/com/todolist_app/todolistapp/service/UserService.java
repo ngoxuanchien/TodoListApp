@@ -15,7 +15,12 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    /**
+     * Get information user
+     * @return UserRespone
+     */
     public UserResponse profileUser() {
+        // Get user from authentication
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
         User user = userRepository.findByEmail(email).orElseThrow();
@@ -27,7 +32,15 @@ public class UserService {
                 .build();
     }
 
+
+
+    /**
+     * Update user
+     * @param newUser
+     * @return new UserReponse
+     */
     public UserResponse updateUser(RegisterRequest newUser) {
+        // Get user from authentication
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
         User user = userRepository.findByEmail(email).orElseThrow();

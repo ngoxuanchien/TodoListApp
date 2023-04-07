@@ -16,7 +16,9 @@
             android:layout_margin="10dp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" android:id="@+id/gridLayout">
+            app:layout_constraintEnd_toEndOf="parent"
+            android:id="@+id/gridLayout">
+
         <TextView
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="10dp"
@@ -27,6 +29,7 @@
                 android:textSize="30sp"
                 android:text="@string/profile"
                 android:minHeight="48dp"/>
+
         <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

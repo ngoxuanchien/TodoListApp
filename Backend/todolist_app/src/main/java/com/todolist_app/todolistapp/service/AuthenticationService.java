@@ -22,10 +22,20 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
+    /**
+     *Check User exist
+     * @param email
+     */
     private void UserExist(String email) {
         var user = repository.findByEmail(email).orElseThrow();
     }
-    public AuthenticationResponse register(RegisterRequest request) {
+
+    /**
+     * REgister new user
+     * @param request
+     * @return
+     */
+    public AuthenticationResponse Register(RegisterRequest request) {
 
         try {
             UserExist(request.getEmail());
@@ -41,14 +51,14 @@ public class AuthenticationService {
                     .role(Role.USER)
                     .build();
             repository.save(user);
-            var jwtToken = jwtService.generateToken(user);
+            var jwtToken = jwtService.GenerateToken(user);
             return AuthenticationResponse.builder()
                     .token(jwtToken)
                     .build();
         }
     }
 
-    public AuthenticationResponse authenticate(AuthenticationRequest request) {
+    public AuthenticationResponse Authenticate(AuthenticationRequest request) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getEmail(),
@@ -57,7 +67,7 @@ public class AuthenticationService {
         );
         var user = repository.findByEmail(request.getEmail())
                 .orElseThrow();
-        var jwtToken = jwtService.generateToken(user);
+        var jwtToken = jwtService.GenerateToken(user);
         return AuthenticationResponse.builder()
                 .token(jwtToken)
                 .build();

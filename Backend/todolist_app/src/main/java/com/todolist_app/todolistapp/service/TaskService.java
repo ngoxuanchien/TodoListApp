@@ -23,9 +23,16 @@ public class TaskService {
     private final TaskRepository taskRepository;
     private final UserRepository userRepository;
 
+    /**
+     * Get user's list tasks
+     * @return List TaskResponse
+     */
     public List<TaskResponse> getTasks() {
+        // Get user emaill form authentication
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
+
+        // Get List<Task> form user email
         List<Task> tasks = taskRepository.getAllByEmail(email).orElseThrow();
 
         return tasks.stream()
@@ -33,20 +40,27 @@ public class TaskService {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Add a task to user list tasks
+     * @param taskRequest
+     * @return TaskResponse
+     */
     public TaskResponse addTask(TaskRequest taskRequest) {
+        // Get user form authentication
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
         Optional<User> user = userRepository.findByEmail(email);
 
+        // Build new task
         var task = Task.builder()
                 .title(taskRequest.getTitle())
                 .description(taskRequest.getDescription())
                 .createdTime(taskRequest.getCreatedTime())
                 .user(user.orElseThrow())
                 .build();
-        taskRepository.save(task);
 
-        System.out.println(task.getDescription());
+        // Save new task
+        taskRepository.save(task);
 
         return TaskResponse.builder()
                 .id(task.getId())
@@ -56,12 +70,22 @@ public class TaskService {
                 .build();
     }
 
+    /**
+     * Delete Task form task id
+     * @param id
+     * @return "Delete failed" / "Delete Success"
+     */
     public String deleteTask(Integer id) {
+
+        // Get user form authentication
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
         User user = userRepository.findByEmail(email).orElseThrow();
+
+        // Get task form id
         Task task = taskRepository.findById(id).orElseThrow();
 
+        // Check if the task belong user
         if (user.getTasks().contains(task)) {
             taskRepository.deleteById(id);
         } else {
@@ -70,12 +94,21 @@ public class TaskService {
         return "Delete Success";
     }
 
+    /**
+     * Get task form id
+     * @param id
+     * @return TaskResponse
+     */
     public TaskResponse getTask(Integer id) {
+        // Get user form authentication
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
         User user = userRepository.findByEmail(email).orElseThrow();
+
+        // Get task form id
         Task task = taskRepository.findById(id).orElseThrow();
 
+        // Check if the task belong user
         if (user.getTasks().contains(task)) {
 
         } else {
@@ -90,12 +123,22 @@ public class TaskService {
                 .build();
     }
 
+    /**
+     * Update task
+     * @param id
+     * @param taskRequest
+     * @return TaskResponse
+     */
     public TaskResponse updateTask(Integer id, TaskRequest taskRequest) {
+        // Get user form authentication
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
         User user = userRepository.findByEmail(email).orElseThrow();
+
+        // Get task form id
         Task task = taskRepository.findById(id).orElseThrow();
 
+        // Update task if the task belong user
         if (user.getTasks().contains(task)) {
             task.setTitle(taskRequest.getTitle());
             task.setDescription(taskRequest.getDescription());

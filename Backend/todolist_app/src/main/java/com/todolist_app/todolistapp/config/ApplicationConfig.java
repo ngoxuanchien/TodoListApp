@@ -17,6 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @RequiredArgsConstructor
 public class ApplicationConfig {
 
+    // Source form https://github.com/ali-bouali/spring-boot-3-jwt-security.git
     private final UserRepository repository;
     @Bean
     public UserDetailsService userDetailsService() {
