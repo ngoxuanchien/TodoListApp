@@ -42,7 +42,12 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHoler> {
     public void onBindViewHolder(@NonNull @NotNull MyViewHoler holder, int position) {
         Task task = tasks.get(position);
         holder.title.setText(task.getTitle());
-        holder.description.setText(task.getDescription());
+
+        String description = task.getDescription();
+        if (description.length() > 45) {
+            description = description.substring(0, 45) + "...";
+        }
+        holder.description.setText(description);
 
         String formatedTime = DateFormat.getDateTimeInstance().format(task.getTimeCreated());
         holder.timeCreated.setText(formatedTime);

@@ -30,19 +30,6 @@ public class EditTaskActivity extends AppCompatActivity {
 
     Button _saveBtn;
 
-    private Task ParseJsonResponse(String response) throws JSONException {
-        Task result;
-        JSONObject jsonObject = new JSONObject(response);
-        result = Task.builder()
-                .id(jsonObject.getInt("id"))
-                .title(jsonObject.getString("title"))
-                .description(jsonObject.getString("description"))
-                .timeCreated(jsonObject.getLong("createdTime"))
-                .build();
-
-        return result;
-    }
-
     private void SaveTask() throws JSONException {
         url = url + _task.getId();
         HashMap<String, String> headers = new HashMap<>();
